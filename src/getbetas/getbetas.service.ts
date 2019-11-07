@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { getBetasReq } from './getbetaReq.dto';
 
 
 @Injectable()
 export class GetbetasService {
 
-  private readonly carsDB: getBetasReq[] = [];
+
   private priorityMatrix: object;
 
-  getBetas(carDetails: getBetasReq) : string {
-    console.log(`Returning Priority Matrix of Candidate Beta Vehicles.`);
+  async getBetas(autoId: number) {
+    console.log(`Returning Priority Matrix of Candidate Beta Vehicles for Alpha car ${autoId}`);
+    // TODO: Call Connection Algorithm
     return `PriorityMatrix: ${this.priorityMatrix}`;
   }
 }

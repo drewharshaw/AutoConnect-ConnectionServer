@@ -4,7 +4,7 @@
  *              from all vehicles and returning the SSID to the client.
  */
 
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Patch, Body } from '@nestjs/common';
 import { updateReq } from './updateconnectReq.dto';
 import { UpdateconnectService } from './updateconnect.service';
 
@@ -12,8 +12,8 @@ import { UpdateconnectService } from './updateconnect.service';
 export class UpdateconnectController {
     constructor(private readonly service: UpdateconnectService){}
 
-    @Post()
-    async updateConnection(@Body() reqParam: updateReq) {
-        return this.service.updateConnection(reqParam);
+    @Patch()
+    async update(@Body() reqParam: updateReq) {
+        return this.service.update(reqParam);
     }
 }

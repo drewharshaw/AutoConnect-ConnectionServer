@@ -7,10 +7,30 @@ import { UpdateconnectController } from './updateconnect/updateconnect.controlle
 import { UpdateconnectService } from './updateconnect/updateconnect.service';
 import { GetbetasController } from './getbetas/getbetas.controller';
 import { GetbetasService } from './getbetas/getbetas.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { InitconnectModule } from './initconnect/initconnect.module';
+import { Autos } from './entity/Autos.entity';
+import { AutosModels } from './entity/AutoModels.entity';
+import { Connections } from './entity/Connections.entity';
+
+require('dotenv').config();
 
 @Module({
-  imports: [],
-  controllers: [AppController, InitconnectController, UpdateconnectController, GetbetasController],
-  providers: [AppService, InitconnectService, UpdateconnectService, GetbetasService],
+  imports: [TypeOrmModule.forRoot({
+    type: "mssql",
+    host: "localhost",
+    port: 1433,
+    username: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    database: "AutoConnectDB",
+    options: {
+      useUTC: true,
+    },
+    synchronize: true,
+    logging: true,
+    entities: [Autos, AutosModels, Connections] 
+  }), InitconnectModule], 
+  controllers: [AppController, UpdateconnectController, GetbetasController],
+  providers: [AppService, UpdateconnectService, GetbetasService],
 })
 export class AppModule {}

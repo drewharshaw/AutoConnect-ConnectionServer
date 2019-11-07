@@ -1,6 +1,11 @@
 export class initReq{
     VIN: string;
-    Path?: object;
-    Latitude: number;
-    Longitude: number;
+    RouteXML: string;
+    PositionX: number;
+    PositionY: number;
+    DestinationX: number;
+    DestinationY: number;
+    Speed: number;
+    Direction: number;
+    Time: string;
 }

@@ -1,7 +1,11 @@
 export class updateReq {
     AutoId: number;
-    Velocity: number;
-    Path?: object;
-    Latitude: number;
-    Longitude: number;
+    Time: string;
+    Speed?: number;
+    Direction?: number;
+    RouteXML?: string;
+    PositionX?: number;
+    PositionY?: number;
+    DestinationX?: number;
+    DestinationY?: number;
 }

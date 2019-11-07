@@ -15,7 +15,7 @@ export class InitconnectController {
     constructor(private readonly service: InitconnectService) {}
 
     @Post()
-    async initConnection(@Body() reqParam: initReq) {
-      return this.service.initConnection(reqParam);
+    async create(@Body() data: initReq) {
+      return this.service.create(data);
     }
 }

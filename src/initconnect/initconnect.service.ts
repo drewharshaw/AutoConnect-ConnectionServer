@@ -6,18 +6,31 @@
 
 import { Injectable } from '@nestjs/common';
 import { initReq } from './initconnectReq.dto';
+import { getConnection, getManager } from "typeorm";
+import { Autos } from '../entity/Autos.entity';
+
 
 
 @Injectable()
 export class InitconnectService {
 
-  private readonly carsDB: initReq[] = [];
-  private AutoID: number = 0;
+  async create(data: initReq){
 
-  initConnection(carDetails: initReq) : string {
-    console.log(`Adding carDetails to DB: ${carDetails}`);
-    this.carsDB.push(carDetails);
-    this.AutoID = this.AutoID + 1;
-    return `AutoId: ${this.AutoID}`;
+    console.log(`Registering Vehicle ${data.VIN}`);
+    const tuple = await Autos.create(data).save();
+    return `Auto ${tuple.AutoId} Successfully Updated!`;
   }
+}
+
+
+
+/**
+ * This function parses the VIN (Vehicle Identification Number)
+ * and returns the modelID
+ * @return ModelID
+ * @param VIN 
+ */
+function parseVIN(VIN: string):number {
+
+    return 2;
 }
