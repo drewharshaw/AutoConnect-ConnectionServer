@@ -1,15 +1,20 @@
-import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, JoinColumn, OneToOne } from "typeorm";
-import { Autos } from "./Autos.entity";
+import {
+  Entity,
+  BaseEntity,
+  PrimaryGeneratedColumn,
+  Column,
+  JoinColumn,
+  OneToOne,
+} from 'typeorm';
 
 @Entity('AutoModels')
 export class AutosModels extends BaseEntity {
+  // foreign key to Autos.ModelId
+  @PrimaryGeneratedColumn()
+  ModelId: number;
 
-    // foreign key to Autos.ModelId
-    @PrimaryGeneratedColumn()
-    ModelId: number;
- 
-    @Column('decimal')
-    Radius: number;
+  @Column('decimal')
+  Radius: number;
 
-    //Come back add manufacturer & year
+  //TODO: Add manufacturer & year
 }
