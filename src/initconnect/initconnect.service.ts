@@ -5,14 +5,30 @@
 
 import { Injectable } from '@nestjs/common';
 import { initReq } from './initconnectReq.dto';
+import { initRes } from './initconnectRes.dto';
 import { Autos } from '../entity/Autos.entity';
+
+const TimeInterval: number = 40.2;
 
 @Injectable()
 export class InitconnectService {
   async create(data: initReq) {
+    let response: initRes = new initRes();
+    console.log('Initconnect EndPoint Hit!');
     console.log(`Registering Vehicle ${data.VIN}`);
-    const tuple = await Autos.create(data).save();
-    return `Auto ${tuple.AutoId} Successfully Updated!`;
+
+    try {
+      const tuple = await Autos.create(data).save();
+      response.Status = 'Success';
+      response.AutoId = tuple.AutoId;
+      response.TimeCheck = TimeInterval;
+    } catch (error) {
+      console.log(error);
+      response.Status = 'Failed';
+    }
+
+    console.log(response);
+    return JSON.stringify(response);
   }
 }
 

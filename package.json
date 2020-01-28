@@ -19,7 +19,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "copy:assets": "cpx 'src/python/*.py' 'dist/python'"
+    "copy:assets": "cpx 'src/getbetas/*.py' 'dist/getbetas'"
   },
   "dependencies": {
     "@nestjs/common": "^6.7.2",

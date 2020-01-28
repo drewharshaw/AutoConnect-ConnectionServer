@@ -1,89 +1,86 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { PythonService } from 'src/python/python.service';
-import { Subject, Observable } from 'rxjs';
+import { Autos } from '../entity/Autos.entity';
+import { getConnection, Db } from 'typeorm';
+import { PythonShell } from 'python-shell';
+import { config } from './python.config';
+import { getbetasReq } from './getbetasReq.dto';
 
 @Injectable()
 export class GetbetasService {
-  private priorityMatrix: object;
+  private shell: PythonShell;
 
-  private queue: any[] = [];
-  private ready: boolean = false;
-  private output: Subject<any> = new Subject<any>();
-
-  constructor(private python: PythonService) {
-    this.python.response.subscribe(data => {
-      if (data.status === 'ready') {
-        this.ready = true;
-        this.process();
-      } else {
-        this.output.next(data);
-      }
-    });
-  }
-
-  private process(): void {
-    if (this.queue.length != 0) {
-      this.ready = false;
-      this.python.process(this.queue.shift());
-    }
-  }
-
-  public get Output(): Observable<any> {
-    return this.output;
-  }
-
-  public input(inputData: any) {
-    console.log(`Adding Request Data to Que`);
-    this.queue.push(inputData);
-
-    if (this.ready) {
-      this.process();
-    }
-  }
-
-  async getBetas(autoId: number) {
-    console.log(`Starting getBetas function for Alpha car ${autoId}`);
-
-    this.input(autoId);
-
-    // TODO: Call Connection Algorithm
-
-    //PythonShell.defaultOptions = { scriptPath: './src/python/' };
-    //let connectionAlg = new PythonShell('Connection-Algorithm.py', config);
-
-    /*
-    console.log('Starting Test 1: ');
-    PythonShell.runString(
-      'import sys print("dsad") sys.stdout.flush()',
-      null,
-      function(err) {
-        if (err) throw err;
-        console.log('finished');
-      },
+  /**
+   * pythonScript executes the python shell script and returns its output
+   * @param data
+   */
+  private async pythonScript(data) {
+    // create instance of connection algorithm
+    this.shell = new PythonShell(
+      `${__dirname}/Connection-Algorithm.py`,
+      config,
     );
-    */
+    //send data request to connection algorithm
+    this.shell.send(data);
+    const priorityMatrix = await this.onExit(this.shell);
 
-    /*
+    console.log(`Python Service Completed ${priorityMatrix['Status']}`);
+    return priorityMatrix;
+  }
 
-    PythonShell.run('./getbetas/Connection-Algorithm.py', null, function(err) {
-      if (err) throw err;
-      // results is an array consisting of messages collected during execution
-      console.log('finished');
+  /**
+   * onExit waits for the python shell's output and returns stdout
+   * @param shell
+   */
+  public onExit(shell: PythonShell): Promise<void> {
+    return new Promise((resolve, reject) => {
+      shell.on('message', message => {
+        message.Status === 'Success' ? resolve(message) : reject(message);
+      });
     });
-    */
+  }
 
-    //Create child process
-    //var spawn = require('child_process').spawn;
+  /**
+   * getBetas queries DB finding nearby Beta Candidates, piping into the
+   * connection algorithm and returning the priority matrix
+   * @param reqData
+   */
+  async getBetas(reqData: getbetasReq) {
+    console.log(`Starting getBetas function for Alpha car ${reqData}`);
 
-    //const process = spawn('python', ['./Connection-Algorithm.py']);
+    //Use Alpha's Connection radius to find near by beta
 
-    // util.log('readingin');
-    /*
-    process.stdout.on('data', function(data) {
-      `Python Script Output: ${data.toString()}`;
-    });
-    */
+    const radius = 50;
 
-    return `PriorityMatrix: ${process}`;
+    const latitudeOffset = 1 / (40075000 / 360 / radius);
+    const longitudeOffset =
+      1 / ((40075000 * Math.cos(reqData.PositionX)) / 360 / radius);
+
+    console.log(
+      ` Long = ${longitudeOffset} - =  ${reqData.PositionX -
+        longitudeOffset} + = ${reqData.PositionX + longitudeOffset}`,
+    );
+    console.log(` Lat = ${latitudeOffset}`);
+
+    // collect all available Beta candidates
+    const betaCandidates = await getConnection().query(
+      `SELECT * from Autos WHERE PositionX <= ${reqData.PositionX +
+        latitudeOffset} AND  PositionX >= ${reqData.PositionX - latitudeOffset}
+      AND PositionY <= ${reqData.PositionY +
+        longitudeOffset} AND  PositionY >= ${reqData.PositionY -
+        longitudeOffset};
+  `,
+    );
+
+    console.table(betaCandidates);
+
+    const pythonInput = { ...betaCandidates, ...reqData };
+
+    console.log(pythonInput);
+
+    //call python connection algorithm
+    const output = await this.pythonScript(pythonInput);
+
+    console.log(`Python Output = ${output}`);
+    return JSON.stringify(output);
   }
 }

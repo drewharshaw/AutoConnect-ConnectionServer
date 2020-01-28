@@ -12,7 +12,6 @@ import { InitconnectModule } from './initconnect/initconnect.module';
 import { Autos } from './entity/Autos.entity';
 import { AutosModels } from './entity/AutoModels.entity';
 import { Connections } from './entity/Connections.entity';
-import { PythonService } from './python/python.service';
 
 require('dotenv').config();
 
@@ -36,6 +35,6 @@ require('dotenv').config();
     InitconnectModule,
   ],
   controllers: [AppController, UpdateconnectController, GetbetasController],
-  providers: [AppService, UpdateconnectService, GetbetasService, PythonService],
+  providers: [AppService, UpdateconnectService, GetbetasService],
 })
 export class AppModule {}

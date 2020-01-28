@@ -4,17 +4,17 @@ import sys
 import json
 
 
-def ready():
-    emit({
-        'status': 'ready'
-    })
-
 def log(*args, **vargs):
     print(*args, file=sys.stderr, **vargs)
 
 def receive():
-    incoming = input()
-    return json.loads(incoming)
+    try:
+        incoming = input()
+        return json.loads(incoming)
+    except EOFError:
+        return
+    
+    
 
 
 def emit(data):
