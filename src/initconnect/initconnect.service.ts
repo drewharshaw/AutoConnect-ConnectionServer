@@ -8,8 +8,6 @@ import { initReq } from './initconnectReq.dto';
 import { initRes } from './initconnectRes.dto';
 import { Autos } from '../entity/Autos.entity';
 
-const TimeInterval: number = 40.2;
-
 @Injectable()
 export class InitconnectService {
   async create(data: initReq) {
@@ -21,7 +19,7 @@ export class InitconnectService {
       const tuple = await Autos.create(data).save();
       response.Status = 'Success';
       response.AutoId = tuple.AutoId;
-      response.TimeCheck = TimeInterval;
+      response.TimeCheck = Math.floor(Math.random() * 15 + 5) + 0.2;
     } catch (error) {
       console.log(error);
       response.Status = 'Failed';

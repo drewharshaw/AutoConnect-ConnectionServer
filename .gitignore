@@ -5,6 +5,9 @@
 # database config
 .env
 
+# VScode settings
+.vscode/
+
 # Logs
 logs
 *.log

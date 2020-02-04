@@ -1,0 +1,14 @@
+﻿Connections ID,Vehicle ID,Time Stamp,Alpha Requests List(s),Current Open Connections
+Vehicle 1,ID1,0,ID2’ID3;ID4 ,
+,,10,ID2’ID3;ID4,ID2’ID3
+,,30,ID2’ID3;ID4,ID2’ID3
+,,40,ID4;ID2’ID3,ID2’ID3
+,,50,ID4;ID2’ID3,ID4
+Vehicle 2,ID2,0,,
+,,30,,ID1
+,,40,,ID1
+Vehicle 3,ID3,0,,
+,,30,,ID1
+,,40,,ID1
+Vehicle 4,ID4,0,,
+,,50,,ID1

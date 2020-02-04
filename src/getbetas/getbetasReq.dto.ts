@@ -1,4 +1,4 @@
-export class getbetasReq {
+export type getbetasReq = {
   AutoId: number;
   PositionX: number;
   PositionY: number;
@@ -7,4 +7,4 @@ export class getbetasReq {
   Time: string;
   ConnectionRadius: number;
   BetaBound: number;
-}
+};

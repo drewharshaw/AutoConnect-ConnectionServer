@@ -1,4 +1,3 @@
-import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { InitconnectService } from './initconnect/initconnect.service';
@@ -12,6 +11,15 @@ import { InitconnectModule } from './initconnect/initconnect.module';
 import { Autos } from './entity/Autos.entity';
 import { AutosModels } from './entity/AutoModels.entity';
 import { Connections } from './entity/Connections.entity';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
+import { ServeHTMLMiddleware } from './app.middleware';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 require('dotenv').config();
 
@@ -37,4 +45,10 @@ require('dotenv').config();
   controllers: [AppController, UpdateconnectController, GetbetasController],
   providers: [AppService, UpdateconnectService, GetbetasService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(ServeHTMLMiddleware)
+      .forRoutes({ path: '*', method: RequestMethod.GET });
+  }
+}

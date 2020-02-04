@@ -1,0 +1,50 @@
+
+
+
+#map {
+	height: 100%;
+}
+
+h1 {
+	display: none;
+}
+
+html, body {
+	height: 100%;
+	margin: 0px;	
+}
+
+main {
+	height: 100%;
+}
+
+section {
+	height: 100%;
+}
+
+// Common Icon properties {}
+.blue-icon,
+.blue-icon-connecting,
+.red-icon,
+.red-icon-connecting
+{
+    color:blue;
+    font-weight:bold;
+    text-align:center;
+    border-radius:50%;
+    line-height:30px;
+    line-width:30px;
+    height:12px;
+    width:12px;
+}
+
+// Common Connecting Icon Properties {}
+.blue-icon-connecting,
+.red-icon-connecting
+{
+    border: 5px solid rgba(255,255,255,0.5);
+}
+
+// Icon Colors {}
+.blue-icon, .blue-icon-connecting { background:blue; }
+.red-icon, .red-icon-connecting { background:red; }

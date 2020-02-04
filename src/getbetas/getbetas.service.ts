@@ -45,7 +45,7 @@ export class GetbetasService {
    * @param reqData
    */
   async getBetas(reqData: getbetasReq) {
-    console.log(`Starting getBetas function for Alpha car ${reqData}`);
+    console.log(`getBetas EndPoint Called!`);
 
     //Use Alpha's Connection radius to find near by beta
 
@@ -55,25 +55,22 @@ export class GetbetasService {
     const longitudeOffset =
       1 / ((40075000 * Math.cos(reqData.PositionX)) / 360 / radius);
 
-    console.log(
-      ` Long = ${longitudeOffset} - =  ${reqData.PositionX -
-        longitudeOffset} + = ${reqData.PositionX + longitudeOffset}`,
-    );
-    console.log(` Lat = ${latitudeOffset}`);
-
     // collect all available Beta candidates
     const betaCandidates = await getConnection().query(
       `SELECT * from Autos WHERE PositionX <= ${reqData.PositionX +
         latitudeOffset} AND  PositionX >= ${reqData.PositionX - latitudeOffset}
-      AND PositionY <= ${reqData.PositionY +
-        longitudeOffset} AND  PositionY >= ${reqData.PositionY -
+      AND PositionY >= ${reqData.PositionY +
+        longitudeOffset} AND  PositionY <= ${reqData.PositionY -
         longitudeOffset};
   `,
     );
 
     console.table(betaCandidates);
 
-    const pythonInput = { ...betaCandidates, ...reqData };
+    const pythonInput = {
+      BetaList: [...betaCandidates],
+      AlphaVehicle: reqData,
+    };
 
     console.log(pythonInput);
 

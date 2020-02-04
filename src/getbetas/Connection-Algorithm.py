@@ -13,10 +13,21 @@ if __name__ == "__main__":
     output = {}
     data = node.receive()
 
-    node.log(data)
+    BetaList = data['BetaList']
+    AlphaVehicle = data['AlphaVehicle']
+    
+
+
+    # Perform Sight Interest Calculations
+
+
+
+
+
+    # debugging print node.log(data)
 
     output['Status'] = 'Success'
-    output['PriorityMatrix'] = [data['0']['AutoId'], data['1']['AutoId']]
+    output['PriorityMatrix'] = [2,3] #[data['0']['AutoId'], data['1']['AutoId']]
 
     node.emit(output)
     # force python to output buffer to terminal
@@ -33,7 +44,7 @@ if __name__ == "__main__":
 # ----- FUNCTION BEHAVIOUR -----
 # This function will apply the heatmap to the sight area of each vehicle
 # calculating their individual SI score.
-#def sight_interest_score():
+#def sight_interest_score(alpha):
 
 
 # ----- BACKGROUND -----
