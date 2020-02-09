@@ -76,6 +76,8 @@ section {
     line-width:30px;
     height:12px;
     width:12px;
+    left: -6px;
+    top: -6px;
 }
 
 // Common Connecting Icon Properties {}
@@ -103,6 +105,8 @@ section {
 .yellow-icon-connecting
 {
     border: 5px solid rgba(255,255,255,0.5);
+    left: -10px;
+    top: -10px;
 }
 
 // Icon Colors {}

@@ -214,6 +214,7 @@ L.Marker.MovingMarker = L.Marker.extend({
   },
 
   _stopAnimation: function() {
+    this._removeConnections();
     if (this._animRequested) {
       L.Util.cancelAnimFrame(this._animId);
       this._animRequested = false;
@@ -237,27 +238,17 @@ L.Marker.MovingMarker = L.Marker.extend({
   _setConnections: function() {
     //console.log("_setConnections");
 
-    // Remove old lines
-    for (const vid in this.polylines) {
-      //console.log(vid);
-      //console.log(map);
-      //console.log(this.polylines[vid]);
-
-      map.removeLayer(this.polylines[vid]);
-    }
-    this.polylines = [];
-
     if (this.connections.length != 0) {
       //console.log(this.totalTimeElapsed);
       //console.log(this.connections[0]);
+      
+      // shift the connections stack if needed
+      while(this.connections.length > 1 && this.connections[1].time < this.totalTimeElapsed)
+        this.connections.shift();
 
-      if (this.connections[0].time == this.totalTimeElapsed)
+      if (this.connections[0].time <= this.totalTimeElapsed)
         this.currentConnections = this.connections[0].markers;
       else this.currentConnections = [];
-
-      // shift the connections stack if needed
-      if (this.connections[0].time <= this.totalTimeElapsed)
-        this.connections.shift();
     }
   },
 
@@ -282,6 +273,18 @@ L.Marker.MovingMarker = L.Marker.extend({
     }
   },
 
+  _removeConnections: function() {
+    // Remove old lines
+    for (const vid in this.polylines) {
+      //console.log(vid);
+      //console.log(map);
+      //console.log(this.polylines[vid]);
+
+      map.removeLayer(this.polylines[vid]);
+    }
+    this.polylines = [];
+  },
+  
   /**
    *   Draws the lines between this marker and anything it is connected with
    *
@@ -383,6 +386,7 @@ L.Marker.MovingMarker = L.Marker.extend({
         elapsedTime,
       );
       this.setLatLng(p);
+      this._removeConnections();
       this._drawConnections();
       this.fire('animate');
     }
