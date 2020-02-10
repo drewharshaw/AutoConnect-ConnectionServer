@@ -32,21 +32,86 @@ section {
 /* Common Icon properties {} */
 .blue-icon,
 .blue-icon-connecting,
+.lightsalmon-icon,
+.lightsalmon-icon-connecting,
+.firebrick-icon,
+.firebrick-icon-connecting,
+.tomato-icon,
+.tomato-icon-connecting,
+.lawngreen-icon,
+.lawngreen-icon-connecting,
+.lime-icon,
+.lime-icon-connecting,
+.darkcyan-icon,
+.darkcyan-icon-connecting,
+.midnightblue-icon,
+.midnightblue-icon-connecting,
+.deeppink-icon,
+.deeppink-icon-connecting,
+.maroon-icon,
+.maroon-icon-connecting,
+.saddlebrown-icon,
+.saddlebrown-icon-connecting,
+.gray-icon,
+.gray-icon-connecting,
+.darkslategray-icon,
+.darkslategray-icon-connecting,
+.indigo-icon,
+.indigo-icon-connecting,
+.magenta-icon,
+.magenta-icon-connecting,
+.mediumslateblue-icon,
+.mediumslateblue-icon-connecting,
+.cyan-icon,
+.cyan-icon-connecting,
+.olive-icon,
+.olive-icon-connecting,
+.mediumseagreen-icon,
+.mediumseagreen-icon-connecting,
+.green-icon,
+.green-icon-connecting,
 .red-icon,
-.red-icon-connecting {
+.red-icon-connecting,
+.yellow-icon,
+.yellow-icon-connecting {
   color: blue;
   font-weight: bold;
   text-align: center;
   border-radius: 50%;
   line-height: 30px;
+  line-width: 30px;
   height: 12px;
   width: 12px;
+  left: -6px;
+  top: -6px;
 }
 
 /* Common Connecting Icon Properties {} */
 .blue-icon-connecting,
-.red-icon-connecting {
+.lightsalmon-icon-connecting,
+.firebrick-icon-connecting,
+.tomato-icon-connecting,
+.lawngreen-icon-connecting,
+.lime-icon-connecting,
+.darkcyan-icon-connecting,
+.midnightblue-icon-connecting,
+.deeppink-icon-connecting,
+.maroon-icon-connecting,
+.saddlebrown-icon-connecting,
+.gray-icon-connecting,
+.darkslategray-icon-connecting,
+.indigo-icon-connecting,
+.magenta-icon-connecting,
+.mediumslateblue-icon-connecting,
+.cyan-icon-connecting,
+.olive-icon-connecting,
+.mediumseagreen-icon-connecting,
+.green-icon-connecting,
+.red-icon-connecting,
+.yellow-icon-connecting {
   border: 5px solid rgba(255, 255, 255, 0.5);
+  left: -10px;
+  top: -10px;
 }
 
 /* Icon Colors {} */
@@ -54,7 +119,87 @@ section {
 .blue-icon-connecting {
   background: blue;
 }
+.lightsalmon-icon,
+.lightsalmon-icon-connecting {
+  background: lightsalmon;
+}
+.firebrick-icon,
+.firebrick-icon-connecting {
+  background: firebrick;
+}
+.tomato-icon,
+.tomato-icon-connecting {
+  background: tomato;
+}
+.lawngreen-icon,
+.lawngreen-icon-connecting {
+  background: lawngreen;
+}
+.lime-icon,
+.lime-icon-connecting {
+  background: lime;
+}
+.darkcyan-icon,
+.darkcyan-icon-connecting {
+  background: darkcyan;
+}
+.midnightblue-icon,
+.midnightblue-icon-connecting {
+  background: midnightblue;
+}
+.deeppink-icon,
+.deeppink-icon-connecting {
+  background: deeppink;
+}
+.maroon-icon,
+.maroon-icon-connecting {
+  background: maroon;
+}
+.saddlebrown-icon,
+.saddlebrown-icon-connecting {
+  background: saddlebrown;
+}
+.gray-icon,
+.gray-icon-connecting {
+  background: gray;
+}
+.darkslategray-icon,
+.darkslategray-icon-connecting {
+  background: darkslategray;
+}
+.indigo-icon,
+.indigo-icon-connecting {
+  background: indigo;
+}
+.magenta-icon,
+.magenta-icon-connecting {
+  background: magenta;
+}
+.mediumslateblue-icon,
+.mediumslateblue-icon-connecting {
+  background: mediumslateblue;
+}
+.cyan-icon,
+.cyan-icon-connecting {
+  background: cyan;
+}
+.olive-icon,
+.olive-icon-connecting {
+  background: olive;
+}
+.mediumseagreen-icon,
+.mediumseagreen-icon-connecting {
+  background: mediumseagreen;
+}
+.green-icon,
+.green-icon-connecting {
+  background: green;
+}
 .red-icon,
 .red-icon-connecting {
   background: red;
+}
+.yellow-icon,
+.yellow-icon-connecting {
+  background: yellow;
 }
