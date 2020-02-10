@@ -151,7 +151,7 @@ function processData(allText) {
 $(document).ready(function() {
   $.ajax({
     type: 'GET',
-    url: 'public/testb.csv',
+    url: 'public/testd.csv',
     dataType: 'text',
     success: function(data) {
       markers = createMarkers(processData(data));
@@ -160,6 +160,7 @@ $(document).ready(function() {
   });
 });
 
+var autoConnectIDMap = {};
 getConnectionsFile();
 
 function getConnectionsFile() {
@@ -168,7 +169,7 @@ function getConnectionsFile() {
         $(document).ready(function() {
           $.ajax({
             type: 'GET',
-            url: 'public/testb_conn.csv',
+            url: 'public/testd_conn.csv',
             dataType: 'text',
             success: function(data) {
               createConnections(processData(data));
@@ -209,7 +210,7 @@ function createMarkers(data) {
   var last_vid = 'Na';
   data.forEach((row, i, array) => {
     var vid = row['Trajectory ID'];
-    var time = parseFloat(row['Time Stamp']*100); /////////////////////////////////// temp added some time
+    var time = parseFloat(row['Time Stamp']*1000); /////////////////////////////////// temp added some time
 
     // Expand the map border region if needed
     create_map_border(parseFloat(row.Latitude), parseFloat(row.Longitude));
@@ -296,7 +297,6 @@ function createMarkers(data) {
   return markers;
 }
 
-
 /**
     When creating connections it must be noted that our java simulator is sending printable formatted CSVs
     Therefore we must add a leading space for each header
@@ -307,12 +307,17 @@ function createConnections(data) {
 
   var time = 0,
     vid = 'Na';
+    
+   data.forEach((row) => {
+       autoConnectIDMap[row[' Vehicle ID']] = row['Connections ID'];
+   })
+    
   // Parse through the data using the vid to update marker attributes
   data.forEach((row, i, array) => {
-    var time_stamp = (parseFloat(row[' Time Stamp'])*100); /////////////////////////////////// temp added some time &&&&&& some rando flat addition
+    var time_stamp = (parseFloat(row[' Time Stamp'])*1000); /////////////////////////////////// temp added some time &&&&&& some rando flat addition
     
-    if (row[' Vehicle ID'] != '') {
-      vid = row[' Vehicle ID'];
+    if (row['Connections ID'] != '') {
+      vid = row['Connections ID'];
       time = 0;
       
     } else {
@@ -327,9 +332,9 @@ function createConnections(data) {
     //console.log("calculating time");
     //console.log(row["Time Stamp"]);
     //console.log(last_timestamp);
-    console.log(vid);
-    console.log(row);
-    console.log(markers);
+    //console.log(vid);
+    //console.log(row);
+    //console.log(markers);
     markers[vid].connections.push({
       time: time,
       markers: parseConnections(row[' Current Open Connections']),
@@ -353,8 +358,8 @@ function parseConnections(stringConnections) {
   //console.log(vids);
   vids.forEach((vid, i, array) => {
     //console.log(markers);
-    //console.log(vid);
-    temp_markers.push(markers[vid]);
+    //console.log(autoConnectIDMap[vid]);
+    temp_markers.push(markers[autoConnectIDMap[vid]]);
   });
   return temp_markers;
 }

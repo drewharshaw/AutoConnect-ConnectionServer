@@ -294,6 +294,8 @@ L.Marker.MovingMarker = L.Marker.extend({
     //console.log(this.currentConnections);
     this.currentConnections.forEach(marker_b => {
       // for all "currentConnections": setLatLngs for the line
+      //console.log(marker_b);
+      //console.log(this);
       if (this.polylines[marker_b.vid] == null)
         this.polylines[marker_b.vid] = L.polyline(
           [this._latlng, marker_b._latlng],
