@@ -5,10 +5,10 @@
   "author": "",
   "license": "MIT",
   "scripts": {
-    "prepublish": "uglifyjs node_modules/simpleheat/simpleheat.js src/HeatLayer.js -c -m -o dist/views/leaflet-heat.js",
+    "prepublish": "uglifyjs node_modules/simpleheat/simpleheat.js src/public/js/HeatLayer.js -c -m -o src/public/js/leaflet-heat.js",
     "prebuild": "rimraf dist",
     "server": "npm run build && npm run start",
-    "build": "nest build && npm run copy:assets && npm run copy:assets2",
+    "build": "nest build && npm run copy:assets && npm run copy:assets2 && npm run prepublish",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "node dist/main",
     "start:dev": "nest start --watch",

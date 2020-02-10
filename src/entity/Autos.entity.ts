@@ -39,6 +39,9 @@ export class Autos extends BaseEntity {
   @Column({ type: 'varchar', length: 100, nullable: true }) // TODO: add datetime type later
   Time: string;
 
+  @Column({ type: 'bit', nullable: true, default: 0 })
+  Terminated: number;
+
   // TODO: add @CreateDateColumn to track insert time
 
   @Column({ type: 'nvarchar', length: 1000 })
