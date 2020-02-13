@@ -47,23 +47,18 @@ export class GetbetasService {
   async getBetas(reqData: getbetasReq) {
     console.log(`getBetas EndPoint Called!`);
 
-    // Calculate outer connetion radius bound
-    const [OuterLatOffset, OuterLongOffset] = metersToCoords(
-      reqData.PositionX,
-      reqData.ConnectionRadius,
-    );
-
     // Calculate inner connection radius bound
+    /* 
     const [InnerLatOffset, InnerLongOffset] = metersToCoords(
       reqData.PositionX,
       10,
     );
+    */
 
     //console.log( `OuterLat = ${OuterLatOffset}, OuterLong = ${OuterLongOffset}, InnerLat = ${InnerLatOffset}, InnerLong = ${InnerLongOffset}`,);
 
-    // collect all available Beta candidates within OuterRadius but not in InnerRadius
-    const betaCandidates = await getConnection().query(
-      `SELECT * from Autos WHERE Terminated = 0 AND PositionX <= ${reqData.PositionX +
+    /*
+     `SELECT * from Autos WHERE Terminated = 0 AND PositionX <= ${reqData.PositionX +
         OuterLatOffset} AND PositionX >= ${reqData.PositionX + InnerLatOffset}
       OR PositionX >= ${reqData.PositionX -
         OuterLatOffset} AND PositionX <= ${reqData.PositionX - InnerLatOffset} 
@@ -74,6 +69,26 @@ export class GetbetasService {
       OR PositionY <= ${reqData.PositionY +
         OuterLongOffset} AND PositionY >= ${reqData.PositionY +
         InnerLongOffset};`,
+    
+    
+    */
+
+    // Calculate outer connetion radius bound
+    const [OuterLatOffset, OuterLongOffset] = metersToCoords(
+      reqData.PositionX,
+      reqData.PositionY,
+      reqData.ConnectionRadius, // make 50 meters
+    );
+
+    console.log(`Lat = ${OuterLatOffset} Long = ${OuterLongOffset}`);
+
+    // collect all available Beta candidates within OuterRadius but not in InnerRadius
+    const betaCandidates = await getConnection().query(
+      `SELECT * from Autos WHERE Terminated = 0 AND PositionX <= ${reqData.PositionX +
+        OuterLatOffset} AND PositionX >= ${reqData.PositionX - OuterLatOffset}
+          AND PositionY <= ${reqData.PositionY +
+            OuterLongOffset} AND PositionY >= ${reqData.PositionY -
+        OuterLongOffset};`,
     );
 
     //console.table(betaCandidates);
@@ -93,9 +108,10 @@ export class GetbetasService {
   }
 }
 
-function metersToCoords(xPosition: number, radius: number) {
-  const latitudeOffset = 1 / (40075000 / 360 / radius);
-  const longitudeOffset = 1 / ((40075000 * Math.cos(xPosition)) / 360 / radius);
+function metersToCoords(xPosition: number, yPosition: number, radius: number) {
+  // similar methode (40075000 / 360) = 111,111
+  const latitudeOffset = radius / (111.32 * 1000);
+  const longitudeOffset = radius / (111111 * Math.cos(xPosition));
 
   return [latitudeOffset, longitudeOffset];
 }
