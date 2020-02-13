@@ -5,6 +5,7 @@
     integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
     crossorigin=""
   />
+  <link rel='icon' href='../public/favicon.ico' type='image/x-icon'/ >
   <script
     src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
     integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
@@ -28,11 +29,15 @@
   <body>
     <main>
       <section>
-        <div id="map"></div>
+        <div id="map">
+          <img
+            id="logoContainer"
+            src="../public/AutoConnect-Logo.png"
+            alt="AutoConnect Logo"
+          />
+        </div>
       </section>
-      Welcome to our home page! Currently we are down for maintenance :(
     </main>
-
     <script
       type="text/javascript"
       src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"
@@ -41,5 +46,58 @@
     <script type="text/javascript" src="../public/js/jquery.csv.js"></script>
     <script type="text/javascript" src="../public/js/MovingMarker.js"></script>
     <script type="text/javascript" src="../public/js/CarSimulator.js"></script>
+    <script src="../public/js/leaflet-heat.js"></script>
+    <script>
+      var heat = L.heatLayer(
+        [
+          [44.2418343, -76.4949676, 3.0],
+          [44.2334607, -76.4930244, 3.0],
+          [44.2321935, -76.4927339, 3.0],
+          [44.2319425, -76.4910171, 3.0],
+          [44.2283629, -76.4814415, 3.0],
+          [44.2428445, -76.4878797, 3.0],
+          [44.2341452, -76.493204, 3.0],
+          [44.2279606, -76.4955676, 3.0],
+          [44.2345274, -76.4956644, 3.0],
+          [44.230092, -76.4851547, 3.0],
+          [44.2310081, -76.4911581, 3.0],
+          [44.2415233, -76.4980731, 3.0],
+          [44.2352741, -76.4974715, 3.0],
+          [44.2316514, -76.4971191, 3.0],
+          [44.2307713, -76.4894884, 3.0],
+          [44.2334723, -76.4887836, 3.0],
+          [44.2316578, -76.4892297, 3.0],
+          [44.2325846, -76.4890278, 3.0],
+          [44.2309502, -76.4844628, 3.0],
+          [44.2380978, -76.4941775, 3.0],
+          [44.2312911, -76.4929643, 3.0],
+          [44.2316953, -76.4956296, 3.0],
+          [44.2392879, -76.4943899, 3.0],
+          [44.233212, -76.4869932, 3.0],
+          [44.2328547, -76.4907608, 3.0],
+          [44.2337472, -76.4905078, 3.0],
+          [44.2306741, -76.4827362, 3.0],
+          [44.229466, -76.483812, 3.0],
+          [44.2324521, -76.4821592, 3.0],
+          [44.2315446, -76.4824265, 3.0],
+          [44.2400446, -76.486365, 3.0],
+          [44.2304393, -76.4812414, 3.0],
+          [44.2288842, -76.4825339, 3.0],
+          [44.2340807, -76.4816288, 3.0],
+          [44.2308707, -76.484517, 3.0],
+          [44.2333458, -76.4818563, 3.0],
+          [44.2311309, -76.4858062, 3.0],
+          [44.2320491, -76.4855383, 3.0],
+          [44.2318172, -76.4841805, 3.0],
+          [44.2328767, -76.4972457, 3.0],
+          [44.2327233, -76.4839383, 3.0],
+          [44.2329284, -76.4852881, 3.0],
+          [44.232623, -76.4956718, 3.0],
+          [44.2347333, -76.4850708, 3.0],
+          [44.2340573, -76.4931798, 3.0],
+        ],
+        { radius: 25 },
+      ).addTo(map);
+    </script>
   </body>
 </html>

@@ -1,50 +1,19 @@
-# Connection-Algorithm
-# Description: Used to determin ideal Beta cars a given Alpha car should connect to
-# This python code will follow PEP-8 standards
+####################################
+# File: Connection-Algorithm.py
+# Author: AutoConnect Team
+# Format Guid: This file follows PEP-8 style guid https://www.python.org/dev/peps/pep-0008/
+# ----- BACKGROUND -----
+# The Connection Algorithm is responsible for returning the Priority Matrix for a given
+# getbetas GET request. The Prioirity Matrix is a priority list of the most ideal beta
+# vehicles to connect to.
+####################################
+
 import sys
 import node
 import json
+import random
 
-
-
-if __name__ == "__main__":
-
-    num = 0
-    output = {}
-    data = node.receive()
-
-    BetaList = data['BetaList']
-    AlphaVehicle = data['AlphaVehicle']
-    
-
-
-    # Perform Sight Interest Calculations
-
-
-
-
-
-    # debugging print node.log(data)
-
-    output['Status'] = 'Success'
-    output['PriorityMatrix'] = [2,3] #[data['0']['AutoId'], data['1']['AutoId']]
-
-    node.emit(output)
-    # force python to output buffer to terminal
-    #sys.stdout.flush()
-
-
-# ----- BACKGROUND -----
-# Sight Interest score is a metric for measuring the value of area a
-# specific vehicle is covering. It is important for vehicles have connections
-# to vehicles that have sight of high likelihood areas of potential hazardous
-# objects. For each geographical area a predictive heatmap has been preprocessed
-# denoting probability scores for each bin. See python file SightInterestScore for 
-# further details. 
-# ----- FUNCTION BEHAVIOUR -----
-# This function will apply the heatmap to the sight area of each vehicle
-# calculating their individual SI score.
-#def sight_interest_score(alpha):
+from SightInterestScore import sight_interest_score
 
 
 # ----- BACKGROUND -----
@@ -64,16 +33,35 @@ if __name__ == "__main__":
 #def time_series_uncertainty_score():
 
 
+if __name__ == "__main__":
 
+    num = 0
+    output = {}
+    data = node.receive()
 
-# ----- FUNCTION BEHAVIOUR -----
-# This function queries the 
-#def find_closest_betas():
-
-
+    beta_list = data['BetaList']
+    alpha_vehicle = data['AlphaVehicle']
     
+    #beta_IS_scores = sight_interest_score(beta_list)
 
+    # get random AutoId
+    if (len(beta_list) not in [0,1]): 
+        random_value = random.randrange(len(beta_list)-1)
+        random_value2 = random.randrange(len(beta_list)-1)
+        output['PriorityMatrix'] = [beta_list[random_value]['AutoId'], beta_list[random_value2]['AutoId']]
+    
+    if(len(beta_list) == 1):
+        output['PriorityMatrix'] = [beta_list[0]['AutoId']]
+    else:
+        output['PriorityMatrix'] = []
 
+    # Perform Sight Interest Calculations
+    # debugging print node.log(data)
 
+    output['Status'] = 'Success'
+   
+    #[data['0']['AutoId'], data['1']['AutoId']]
 
-
+    node.emit(output)
+    # force python to output buffer to terminal
+    #sys.stdout.flush()
