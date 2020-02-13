@@ -37,6 +37,9 @@ $ npm install
 ## Running the app
 
 ```bash
+# build 
+$ npm run build
+
 # development
 $ npm run start
 
