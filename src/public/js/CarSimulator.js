@@ -1,3 +1,11 @@
+var thisScript = $('script[src*=CarSimulator]');
+
+// get full path of CSVs
+var tragectoryCSV = thisScript.attr('tragectoryCSV');
+var connnectionCSV = thisScript.attr('connnectionCSV');
+
+var timeFactor = 100;
+
 // initialize the map on the "map" div with a given center and zoom
 var map = new L.Map('map', {
   zoom: 6,
@@ -18,132 +26,304 @@ map.addLayer(layer);
 // Load in all custom icons with color information
 // Create an array to hold all the icon and color information
 var icons = [
-    {
-      color: 'red',
-      standard: L.divIcon({ id: 'redIcon', className: 'red-icon', iconSize: null }),
-      communicating: L.divIcon({ id: 'redIconConnecting', className: 'red-icon-connecting', iconSize: null }),
-    },
-    {
-      color: 'blue',
-      standard: L.divIcon({ id: 'blueIcon', className: 'blue-icon', iconSize: null }),
-      communicating: L.divIcon({ id: 'blueIconConnecting', className: 'blue-icon-connecting',iconSize: null }),
-    },
-    {
-      color: 'lightsalmon',
-      standard: L.divIcon({ id: 'lightsalmonIcon', className: 'lightsalmon-icon', iconSize: null }),
-      communicating: L.divIcon({ id: 'lightsalmonIconConnecting', className: 'lightsalmon-icon-connecting',iconSize: null }),
-    },
-    {
-      color: 'firebrick',
-      standard: L.divIcon({ id: 'firebrickIcon', className: 'firebrick-icon', iconSize: null }),
-      communicating: L.divIcon({ id: 'firebrickIconConnecting', className: 'firebrick-icon-connecting',iconSize: null }),
-    },
-    {
-      color: 'tomato',
-      standard: L.divIcon({ id: 'tomatoIcon', className: 'tomato-icon', iconSize: null }),
-      communicating: L.divIcon({ id: 'tomatoIconConnecting', className: 'tomato-icon-connecting',iconSize: null }),
-    },
-    {
-      color: 'lawngreen',
-      standard: L.divIcon({ id: 'lawngreenIcon', className: 'lawngreen-icon', iconSize: null }),
-      communicating: L.divIcon({ id: 'lawngreenIconConnecting', className: 'lawngreen-icon-connecting',iconSize: null }),
-    },
-    {
-      color: 'lime',
-      standard: L.divIcon({ id: 'limeIcon', className: 'lime-icon', iconSize: null }),
-      communicating: L.divIcon({ id: 'limeIconConnecting', className: 'lime-icon-connecting',iconSize: null }),
-    },
-    {
-      color: 'darkcyan',
-      standard: L.divIcon({ id: 'darkcyanIcon', className: 'darkcyan-icon', iconSize: null }),
-      communicating: L.divIcon({ id: 'darkcyanIconConnecting', className: 'darkcyan-icon-connecting',iconSize: null }),
-    },
-    {
-      color: 'midnightblue',
-      standard: L.divIcon({ id: 'midnightblueIcon', className: 'midnightblue-icon', iconSize: null }),
-      communicating: L.divIcon({ id: 'midnightblueIconConnecting', className: 'midnightblue-icon-connecting',iconSize: null }),
-    },
-    {
-      color: 'deeppink',
-      standard: L.divIcon({ id: 'deeppinkIcon', className: 'deeppink-icon', iconSize: null }),
-      communicating: L.divIcon({ id: 'deeppinkIconConnecting', className: 'deeppink-icon-connecting',iconSize: null }),
-    },
-    {
-      color: 'maroon',
-      standard: L.divIcon({ id: 'maroonIcon', className: 'maroon-icon', iconSize: null }),
-      communicating: L.divIcon({ id: 'maroonIconConnecting', className: 'maroon-icon-connecting',iconSize: null }),
-    },
-    {
-      color: 'saddlebrown',
-      standard: L.divIcon({ id: 'saddlebrownIcon', className: 'saddlebrown-icon', iconSize: null }),
-      communicating: L.divIcon({ id: 'saddlebrownIconConnecting', className: 'saddlebrown-icon-connecting',iconSize: null }),
-    },
-    {
-      color: 'gray',
-      standard: L.divIcon({ id: 'grayIcon', className: 'gray-icon', iconSize: null }),
-      communicating: L.divIcon({ id: 'grayIconConnecting', className: 'gray-icon-connecting',iconSize: null }),
-    },
-    {
-      color: 'darkslategray',
-      standard: L.divIcon({ id: 'darkslategrayIcon', className: 'darkslategray-icon', iconSize: null }),
-      communicating: L.divIcon({ id: 'darkslategrayIconConnecting', className: 'darkslategray-icon-connecting',iconSize: null }),
-    },
-    {
-      color: 'indigo',
-      standard: L.divIcon({ id: 'indigoIcon', className: 'indigo-icon', iconSize: null }),
-      communicating: L.divIcon({ id: 'indigoIconConnecting', className: 'indigo-icon-connecting',iconSize: null }),
-    },
-    {
-      color: 'magenta',
-      standard: L.divIcon({ id: 'magentaIcon', className: 'magenta-icon', iconSize: null }),
-      communicating: L.divIcon({ id: 'magentaIconConnecting', className: 'magenta-icon-connecting',iconSize: null }),
-    },
-    {
-      color: 'mediumslateblue',
-      standard: L.divIcon({ id: 'mediumslateblueIcon', className: 'mediumslateblue-icon', iconSize: null }),
-      communicating: L.divIcon({ id: 'mediumslateblueIconConnecting', className: 'mediumslateblue-icon-connecting',iconSize: null }),
-    },
-    {
-      color: 'cyan',
-      standard: L.divIcon({ id: 'cyanIcon', className: 'cyan-icon', iconSize: null }),
-      communicating: L.divIcon({ id: 'cyanIconConnecting', className: 'cyan-icon-connecting',iconSize: null }),
-    },
-    {
-      color: 'olive',
-      standard: L.divIcon({ id: 'oliveIcon', className: 'olive-icon', iconSize: null }),
-      communicating: L.divIcon({ id: 'oliveIconConnecting', className: 'olive-icon-connecting',iconSize: null }),
-    },
-    {
-      color: 'mediumseagreen',
-      standard: L.divIcon({ id: 'mediumseagreenIcon', className: 'mediumseagreen-icon', iconSize: null }),
-      communicating: L.divIcon({ id: 'mediumseagreenIconConnecting', className: 'mediumseagreen-icon-connecting',iconSize: null }),
-    },
-    {
-      color: 'green',
-      standard: L.divIcon({ id: 'greenIcon', className: 'green-icon', iconSize: null }),
-      communicating: L.divIcon({ id: 'greenIconConnecting', className: 'green-icon-connecting',iconSize: null }),
-    },
-    {
-      color: 'yellow',
-      standard: L.divIcon({ id: 'yellowIcon', className: 'yellow-icon', iconSize: null }),
-      communicating: L.divIcon({ id: 'yellowIconConnecting', className: 'yellow-icon-connecting', iconSize: null }),
-    }
-    
+  {
+    color: 'red',
+    standard: L.divIcon({
+      id: 'redIcon',
+      className: 'red-icon',
+      iconSize: null,
+    }),
+    communicating: L.divIcon({
+      id: 'redIconConnecting',
+      className: 'red-icon-connecting',
+      iconSize: null,
+    }),
+  },
+  {
+    color: 'blue',
+    standard: L.divIcon({
+      id: 'blueIcon',
+      className: 'blue-icon',
+      iconSize: null,
+    }),
+    communicating: L.divIcon({
+      id: 'blueIconConnecting',
+      className: 'blue-icon-connecting',
+      iconSize: null,
+    }),
+  },
+  {
+    color: 'lightsalmon',
+    standard: L.divIcon({
+      id: 'lightsalmonIcon',
+      className: 'lightsalmon-icon',
+      iconSize: null,
+    }),
+    communicating: L.divIcon({
+      id: 'lightsalmonIconConnecting',
+      className: 'lightsalmon-icon-connecting',
+      iconSize: null,
+    }),
+  },
+  {
+    color: 'firebrick',
+    standard: L.divIcon({
+      id: 'firebrickIcon',
+      className: 'firebrick-icon',
+      iconSize: null,
+    }),
+    communicating: L.divIcon({
+      id: 'firebrickIconConnecting',
+      className: 'firebrick-icon-connecting',
+      iconSize: null,
+    }),
+  },
+  {
+    color: 'tomato',
+    standard: L.divIcon({
+      id: 'tomatoIcon',
+      className: 'tomato-icon',
+      iconSize: null,
+    }),
+    communicating: L.divIcon({
+      id: 'tomatoIconConnecting',
+      className: 'tomato-icon-connecting',
+      iconSize: null,
+    }),
+  },
+  {
+    color: 'lawngreen',
+    standard: L.divIcon({
+      id: 'lawngreenIcon',
+      className: 'lawngreen-icon',
+      iconSize: null,
+    }),
+    communicating: L.divIcon({
+      id: 'lawngreenIconConnecting',
+      className: 'lawngreen-icon-connecting',
+      iconSize: null,
+    }),
+  },
+  {
+    color: 'lime',
+    standard: L.divIcon({
+      id: 'limeIcon',
+      className: 'lime-icon',
+      iconSize: null,
+    }),
+    communicating: L.divIcon({
+      id: 'limeIconConnecting',
+      className: 'lime-icon-connecting',
+      iconSize: null,
+    }),
+  },
+  {
+    color: 'darkcyan',
+    standard: L.divIcon({
+      id: 'darkcyanIcon',
+      className: 'darkcyan-icon',
+      iconSize: null,
+    }),
+    communicating: L.divIcon({
+      id: 'darkcyanIconConnecting',
+      className: 'darkcyan-icon-connecting',
+      iconSize: null,
+    }),
+  },
+  {
+    color: 'midnightblue',
+    standard: L.divIcon({
+      id: 'midnightblueIcon',
+      className: 'midnightblue-icon',
+      iconSize: null,
+    }),
+    communicating: L.divIcon({
+      id: 'midnightblueIconConnecting',
+      className: 'midnightblue-icon-connecting',
+      iconSize: null,
+    }),
+  },
+  {
+    color: 'deeppink',
+    standard: L.divIcon({
+      id: 'deeppinkIcon',
+      className: 'deeppink-icon',
+      iconSize: null,
+    }),
+    communicating: L.divIcon({
+      id: 'deeppinkIconConnecting',
+      className: 'deeppink-icon-connecting',
+      iconSize: null,
+    }),
+  },
+  {
+    color: 'maroon',
+    standard: L.divIcon({
+      id: 'maroonIcon',
+      className: 'maroon-icon',
+      iconSize: null,
+    }),
+    communicating: L.divIcon({
+      id: 'maroonIconConnecting',
+      className: 'maroon-icon-connecting',
+      iconSize: null,
+    }),
+  },
+  {
+    color: 'saddlebrown',
+    standard: L.divIcon({
+      id: 'saddlebrownIcon',
+      className: 'saddlebrown-icon',
+      iconSize: null,
+    }),
+    communicating: L.divIcon({
+      id: 'saddlebrownIconConnecting',
+      className: 'saddlebrown-icon-connecting',
+      iconSize: null,
+    }),
+  },
+  {
+    color: 'gray',
+    standard: L.divIcon({
+      id: 'grayIcon',
+      className: 'gray-icon',
+      iconSize: null,
+    }),
+    communicating: L.divIcon({
+      id: 'grayIconConnecting',
+      className: 'gray-icon-connecting',
+      iconSize: null,
+    }),
+  },
+  {
+    color: 'darkslategray',
+    standard: L.divIcon({
+      id: 'darkslategrayIcon',
+      className: 'darkslategray-icon',
+      iconSize: null,
+    }),
+    communicating: L.divIcon({
+      id: 'darkslategrayIconConnecting',
+      className: 'darkslategray-icon-connecting',
+      iconSize: null,
+    }),
+  },
+  {
+    color: 'indigo',
+    standard: L.divIcon({
+      id: 'indigoIcon',
+      className: 'indigo-icon',
+      iconSize: null,
+    }),
+    communicating: L.divIcon({
+      id: 'indigoIconConnecting',
+      className: 'indigo-icon-connecting',
+      iconSize: null,
+    }),
+  },
+  {
+    color: 'magenta',
+    standard: L.divIcon({
+      id: 'magentaIcon',
+      className: 'magenta-icon',
+      iconSize: null,
+    }),
+    communicating: L.divIcon({
+      id: 'magentaIconConnecting',
+      className: 'magenta-icon-connecting',
+      iconSize: null,
+    }),
+  },
+  {
+    color: 'mediumslateblue',
+    standard: L.divIcon({
+      id: 'mediumslateblueIcon',
+      className: 'mediumslateblue-icon',
+      iconSize: null,
+    }),
+    communicating: L.divIcon({
+      id: 'mediumslateblueIconConnecting',
+      className: 'mediumslateblue-icon-connecting',
+      iconSize: null,
+    }),
+  },
+  {
+    color: 'cyan',
+    standard: L.divIcon({
+      id: 'cyanIcon',
+      className: 'cyan-icon',
+      iconSize: null,
+    }),
+    communicating: L.divIcon({
+      id: 'cyanIconConnecting',
+      className: 'cyan-icon-connecting',
+      iconSize: null,
+    }),
+  },
+  {
+    color: 'olive',
+    standard: L.divIcon({
+      id: 'oliveIcon',
+      className: 'olive-icon',
+      iconSize: null,
+    }),
+    communicating: L.divIcon({
+      id: 'oliveIconConnecting',
+      className: 'olive-icon-connecting',
+      iconSize: null,
+    }),
+  },
+  {
+    color: 'mediumseagreen',
+    standard: L.divIcon({
+      id: 'mediumseagreenIcon',
+      className: 'mediumseagreen-icon',
+      iconSize: null,
+    }),
+    communicating: L.divIcon({
+      id: 'mediumseagreenIconConnecting',
+      className: 'mediumseagreen-icon-connecting',
+      iconSize: null,
+    }),
+  },
+  {
+    color: 'green',
+    standard: L.divIcon({
+      id: 'greenIcon',
+      className: 'green-icon',
+      iconSize: null,
+    }),
+    communicating: L.divIcon({
+      id: 'greenIconConnecting',
+      className: 'green-icon-connecting',
+      iconSize: null,
+    }),
+  },
+  {
+    color: 'yellow',
+    standard: L.divIcon({
+      id: 'yellowIcon',
+      className: 'yellow-icon',
+      iconSize: null,
+    }),
+    communicating: L.divIcon({
+      id: 'yellowIconConnecting',
+      className: 'yellow-icon-connecting',
+      iconSize: null,
+    }),
+  },
 ];
 
 // Create global markers map. This will be populated by info in the trajectory file
 // The map is keyed by "Vehicle ID"
 // The markers array will be used to draw lines between markers
 var markers = {};
+var maxTime = 0;
 var done_creating_markers = false;
 
 // Process CSV text into a javascript object
 function processData(allText) {
-  console.log('processData');
-  //console.log(allText);
-
   var data = $.csv.toObjects(allText);
-
   return data;
 }
 
@@ -151,34 +331,44 @@ function processData(allText) {
 $(document).ready(function() {
   $.ajax({
     type: 'GET',
-    url: 'public/testd.csv',
+    url: tragectoryCSV, // 'public/testd.csv',
     dataType: 'text',
     success: function(data) {
-      markers = createMarkers(processData(data));
-      done_creating_markers = true;
+      main(processData(data));
     },
   });
 });
 
+function main(data) {
+  markers = createMarkers(data);
+  done_creating_markers = true;
+  getConnectionsFile();
+
+  // set timeout for program reset
+  setTimeout(() => {
+    main(data);
+  }, maxTime);
+}
+
 var autoConnectIDMap = {};
-getConnectionsFile();
+//getConnectionsFile();
 
 function getConnectionsFile() {
-    if (done_creating_markers) {
-        // Load in Connections CSV document and create connection information between markers
-        $(document).ready(function() {
-          $.ajax({
-            type: 'GET',
-            url: 'public/testd_conn.csv',
-            dataType: 'text',
-            success: function(data) {
-              createConnections(processData(data));
-            },
-          });
-        });
-    } else {
-        setTimeout(getConnectionsFile, 1000);
-    }
+  if (done_creating_markers) {
+    // Load in Connections CSV document and create connection information between markers
+    $(document).ready(function() {
+      $.ajax({
+        type: 'GET',
+        url: connnectionCSV, //public/testd_conn.csv',
+        dataType: 'text',
+        success: function(data) {
+          createConnections(processData(data));
+        },
+      });
+    });
+  } else {
+    setTimeout(getConnectionsFile, 1000);
+  }
 }
 
 // Define the default map borders such that they must be set
@@ -196,9 +386,6 @@ function create_map_border(lat, lon) {
 
 // Create the animated markers from an object created by CSV
 function createMarkers(data) {
-  console.log('createMarkers');
-  //console.log(data);
-
   var markers = {};
   var positions = new Array();
   var times = new Array();
@@ -208,9 +395,16 @@ function createMarkers(data) {
   var all_positions = new Array();
 
   var last_vid = 'Na';
+
+  console.log('Start createMarkers');
+
   data.forEach((row, i, array) => {
     var vid = row['Trajectory ID'];
-    var time = parseFloat(row['Time Stamp']*1000); /////////////////////////////////// temp added some time
+    var time = parseFloat(row['Time Stamp'] * timeFactor); /////////////////////////////////// temp added some time
+
+    if (time > maxTime) {
+      maxTime = time;
+    }
 
     // Expand the map border region if needed
     create_map_border(parseFloat(row.Latitude), parseFloat(row.Longitude));
@@ -222,7 +416,7 @@ function createMarkers(data) {
         parseFloat(data[i].Latitude),
         parseFloat(data[i].Longitude),
       ]);
-      times.push(time - last_timestamp); 
+      times.push(time - last_timestamp);
       last_timestamp = time;
     }
 
@@ -251,33 +445,39 @@ function createMarkers(data) {
         // Pause the marker until its start time
         //markers[last_vid].pause();
         // Set the marker to appear after a duration
-        setTimeout((vid) => {
+        setTimeout(
+          vid => {
             //console.log("Starting vehicle: ");
             //console.log(vid);
             //console.log(markers[vid]);
-            if(vid == 326)
-                console.log(markers[vid]);
+            if (vid == 326) console.log(markers[vid]);
             markers[vid].addTo(map);
             //markers[vid].resume();
-        }, markers[last_vid].startTime, last_vid);
+          },
+          markers[last_vid].startTime,
+          last_vid,
+        );
         //console.log(markers[last_vid].startTime*100);
-        
+
         // Set the marker to disapear after a duration
-        setTimeout((vid)=> {
+        setTimeout(
+          vid => {
             map.removeLayer(markers[vid]);
-        }, markers[last_vid].endTime, last_vid);
+          },
+          markers[last_vid].endTime,
+          last_vid,
+        );
         //console.log(markers[last_vid].endTime*100)
-        
-        
+
         //console.log(markers[last_vid]);
       }
 
       // Cleanup for new vehicle
       last_timestamp = 0;
       last_vid = vid;
-      positions = new Array();
+      positions = new Array(); //DPH memory leak here
       times = new Array();
-      
+
       // Start next vehicle with 0 time at their first location
       first_timestamp = time;
     } else {
@@ -288,9 +488,10 @@ function createMarkers(data) {
     positions.push([
       parseFloat(data[i].Latitude),
       parseFloat(data[i].Longitude),
-    ]);    
+    ]);
     last_timestamp = time;
   });
+  console.log('Completed Create Markers');
 
   map.fitBounds(Object.values(map_border));
 
@@ -307,25 +508,24 @@ function createConnections(data) {
 
   var time = 0,
     vid = 'Na';
-    
-   data.forEach((row) => {
-       autoConnectIDMap[row[' Vehicle ID']] = row['Connections ID'];
-   })
-    
+
+  data.forEach(row => {
+    autoConnectIDMap[row[' Vehicle ID']] = row['Connections ID'];
+  });
+
   // Parse through the data using the vid to update marker attributes
   data.forEach((row, i, array) => {
-    var time_stamp = (parseFloat(row[' Time Stamp'])*1000); /////////////////////////////////// temp added some time &&&&&& some rando flat addition
-    
+    var time_stamp = parseFloat(row[' Time Stamp']) * timeFactor; /////////////////////////////////// temp added some time &&&&&& some rando flat addition
+
     if (row['Connections ID'] != '') {
       vid = row['Connections ID'];
       time = 0;
-      
     } else {
       //console.log(row);
       //console.log(time_stamp);
       //console.log(markers[vid].startTime);
       //console.log(markers[vid]);
-      time = time_stamp - markers[vid].startTime; 
+      time = time_stamp - markers[vid].startTime;
       //console.log(time);
     }
 
@@ -351,7 +551,7 @@ function parseConnections(stringConnections) {
   //console.log("parseConnections");
   //console.log(stringConnections);
   //console.log(stringConnections.split("’"));
-  var vids = stringConnections.split('\'');
+  var vids = stringConnections.split("'");
   if (vids[0] == '') vids.length = 0;
   temp_markers = [];
 

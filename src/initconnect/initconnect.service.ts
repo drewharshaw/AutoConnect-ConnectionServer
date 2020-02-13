@@ -19,7 +19,7 @@ export class InitconnectService {
       const tuple = await Autos.create(data).save();
       response.Status = 'Success';
       response.AutoId = tuple.AutoId;
-      response.TimeCheck = Math.floor(Math.random() * 15 + 5) + 0.2;
+      response.TimeCheck = 5.2; //Math.floor(Math.random() * 50 + 20) + 0.2;
     } catch (error) {
       console.log(error);
       response.Status = 'Failed';

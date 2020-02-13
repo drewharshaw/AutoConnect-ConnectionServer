@@ -29,39 +29,45 @@ from SightInterestScore import sight_interest_score
 
 # ----- BACKGROUND -----
 # Since predictions are being made, as time passess, the predictions become
-# of less value. This time series uncertainty score 
+# of less value. This time series uncertainty score will account for this and
+# modify the 
 #def time_series_uncertainty_score():
 
 
 if __name__ == "__main__":
 
-    num = 0
+    input_data = node.receive()
     output = {}
-    data = node.receive()
+    output['PriorityMatrix'] = []
 
-    beta_list = data['BetaList']
-    alpha_vehicle = data['AlphaVehicle']
+    beta_list = input_data['BetaList']
+    alpha_vehicle = input_data['AlphaVehicle']
     
+    # Perform Sight Interest Calculations
     #beta_IS_scores = sight_interest_score(beta_list)
 
-    # get random AutoId
-    if (len(beta_list) not in [0,1]): 
-        random_value = random.randrange(len(beta_list)-1)
-        random_value2 = random.randrange(len(beta_list)-1)
-        output['PriorityMatrix'] = [beta_list[random_value]['AutoId'], beta_list[random_value2]['AutoId']]
-    
-    if(len(beta_list) == 1):
-        output['PriorityMatrix'] = [beta_list[0]['AutoId']]
-    else:
-        output['PriorityMatrix'] = []
+    # think about BetaBound
 
-    # Perform Sight Interest Calculations
-    # debugging print node.log(data)
+    # fixed at 0-3
+    if len(beta_list) == 1:
+        output['PriorityMatrix'].append(beta_list[0]['AutoId'])
+    elif len(beta_list) == 2:
+        output['PriorityMatrix'].append(beta_list[0]['AutoId'])
+        output['PriorityMatrix'].append(beta_list[1]['AutoId'])
+    elif len(beta_list) == 3:
+        output['PriorityMatrix'].append(beta_list[0]['AutoId'])
+        output['PriorityMatrix'].append(beta_list[1]['AutoId'])
+        output['PriorityMatrix'].append(beta_list[2]['AutoId'])
+
+    '''
+        for i in range(alpha_vehicle['BetaBound']):
+            rand_int = random.randrange(len(beta_list)-1)
+            output['PriorityMatrix'].append(beta_list[rand_int]['AutoId'])
+    '''
 
     output['Status'] = 'Success'
-   
-    #[data['0']['AutoId'], data['1']['AutoId']]
-
     node.emit(output)
-    # force python to output buffer to terminal
+
+
+    #force python to output buffer to terminal
     #sys.stdout.flush()

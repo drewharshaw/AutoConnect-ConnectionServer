@@ -241,9 +241,12 @@ L.Marker.MovingMarker = L.Marker.extend({
     if (this.connections.length != 0) {
       //console.log(this.totalTimeElapsed);
       //console.log(this.connections[0]);
-      
+
       // shift the connections stack if needed
-      while(this.connections.length > 1 && this.connections[1].time < this.totalTimeElapsed)
+      while (
+        this.connections.length > 1 &&
+        this.connections[1].time < this.totalTimeElapsed
+      )
         this.connections.shift();
 
       if (this.connections[0].time <= this.totalTimeElapsed)
@@ -253,7 +256,8 @@ L.Marker.MovingMarker = L.Marker.extend({
   },
 
   /**
-   *   Set the communicating state of the marker
+   *
+   * Set the communicating state of the marker
    **/
   _setCommunicating: function() {
     //console.log("_setCommunicating");
@@ -284,7 +288,7 @@ L.Marker.MovingMarker = L.Marker.extend({
     }
     this.polylines = [];
   },
-  
+
   /**
    *   Draws the lines between this marker and anything it is connected with
    *
@@ -352,7 +356,7 @@ L.Marker.MovingMarker = L.Marker.extend({
           // the last position
           this.setLatLng(this._latlngs[this._latlngs.length - 1]);
           this.stop(elapsedTime);
-          this._setCommunicating();
+          // this._setCommunicating();
           this._setConnections();
           return null;
         }
@@ -361,7 +365,7 @@ L.Marker.MovingMarker = L.Marker.extend({
     }
 
     this._loadLine(lineIndex);
-    this._setCommunicating();
+    //this._setCommunicating();
     this._setConnections();
     this._startTimeStamp = timestamp - elapsedTime;
     this._startTime = Date.now() - elapsedTime;

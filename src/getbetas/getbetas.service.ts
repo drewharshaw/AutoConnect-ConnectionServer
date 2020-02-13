@@ -56,7 +56,7 @@ export class GetbetasService {
     // Calculate inner connection radius bound
     const [InnerLatOffset, InnerLongOffset] = metersToCoords(
       reqData.PositionX,
-      50,
+      10,
     );
 
     //console.log( `OuterLat = ${OuterLatOffset}, OuterLong = ${OuterLongOffset}, InnerLat = ${InnerLatOffset}, InnerLong = ${InnerLongOffset}`,);

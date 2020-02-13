@@ -19,6 +19,8 @@ export class ServeHTMLMiddleware implements NestMiddleware {
       return next();
     } else if (req.path.includes('/public/')) {
       res.sendFile(join(process.cwd(), 'src/', req.path));
+    } else if (req.path.includes('/onRamp.html')) {
+      res.sendFile(join(process.cwd(), '/src/views/onRamp.html'));
     } else if (req.path.includes('/')) {
       // change the path to the correct html page path in your project
       res.sendFile(join(process.cwd(), '/src/views/index.html'));
