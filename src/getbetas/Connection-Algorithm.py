@@ -4,8 +4,8 @@
 # Format Guid: This file follows PEP-8 style guid https://www.python.org/dev/peps/pep-0008/
 # ----- BACKGROUND -----
 # The Connection Algorithm is responsible for returning the Priority Matrix for a given
-# getbetas GET request. The Prioirity Matrix is a priority list of the most ideal beta
-# vehicles to connect to.
+# getbetas GET request made by an Alpha vehicle. The Prioirity Matrix is a ordered list of ideal Beta
+# candidate connection details.
 ####################################
 
 import sys
